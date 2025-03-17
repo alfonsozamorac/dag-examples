@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.utils.dates import days_ago
 
 def print_hello():
     return "Hello, Airflow!"
@@ -12,11 +13,7 @@ def print_middle():
     return "Executing intermediate task"
 
 default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2024, 3, 17),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    "start_date": days_ago(1),
 }
 
 complex_dag = DAG(
